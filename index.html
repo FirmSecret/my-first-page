@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Добро пожаловать</title>
+  <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      background: #ffffff;
+    }
+
+    /* ---------- Главная кнопка ---------- */
+    #center {
+      position: fixed;
+      top: 35%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    #mainBtn {
+      width: 340px;
+      height: 130px;
+      border-radius: 50%;
+      border: 2px solid #e0e0e0;
+      background: linear-gradient(#ffffff, #f0f0f0);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      font-family: "Marck Script", cursive;
+      font-size: 34px;
+      color: #222222;
+    }
+
+    #mainBtn.red {
+      color: #ff0000;
+    }
+
+    /* ---------- Бегущая надпись ---------- */
+    #marquee {
+      position: fixed;
+      top: 55%;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    #strip {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 44px;
+      color: #222222;
+      animation: moveRight 25s linear infinite;
+    }
+
+    #strip span {
+      display: inline-block;
+      padding-right: 50px;
+    }
+
+    @keyframes moveRight {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0); }
+    }
+
+    /* ---------- Небо ---------- */
+    #sky {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(#3a9bff, #bfe6ff);
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    #sky.sunset {
+      background: linear-gradient(#5b2a86, #ff5e62, #ffb36b);
+    }
+
+    #sky.night {
+      background: linear-gradient(#050816, #14204a);
+    }
+
+    .cloud {
+      position: absolute;
+      width: 200px;
+      height: 60px;
+      background: #ffffff;
+      border-radius: 100px;
+      opacity: 0.92;
+      animation: drift linear infinite;
+    }
+
+    .cloud::before {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: #ffffff;
+      border-radius: 50%;
+      top: -50px;
+      left: 30px;
+    }
+
+    .cloud::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      background: #ffffff;
+      border-radius: 50%;
+      top: -70px;
+      left: 80px;
+    }
+
+    #sky.sunset .cloud {
+      opacity: 0.6;
+    }
+
+    #sky.night .cloud {
+      opacity: 0.15;
+    }
+
+    @keyframes drift {
+      from { left: -350px; }
+      to   { left: 100%; }
+    }
+
+    /* Звёзды: видны только ночью */
+    .star {
+      display: none;
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #ffffff;
+    }
+
+    #sky.night .star {
+      display: block;
+    }
+
+    body.with-sky #sky {
+      display: block;
+    }
+
+    body.with-sky #strip {
+      color: #ffffff;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ---------- Меню ---------- */
+    .menu {
+      display: none;
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      flex-direction: column;
+      gap: 24px;
+      z-index: 3;
+    }
+
+    #menuLeft  { left: 40px; }
+    #menuRight { right: 40px; }
+
+    body.with-sky .menu {
+      display: flex;
+    }
+
+    .menu button {
+      width: 80px;
+      height: 80px;
+      border: none;
+      border-radius: 22px;
+      font-size: 30px;
+      font-weight: bold;
+      color: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+      font-family: inherit;
+    }
+
+    .b1 { background: linear-gradient(#ff4d4d, #d10000); }
+    .b2 { background: linear-gradient(#ffb347, #ff7a00); }
+    .b3 { background: linear-gradient(#ffe84d, #f2c200); color: #333333; }
+    .b4 { background: linear-gradient(#4ddc7a, #00a63e); }
+    .b5 { background: linear-gradient(#5bb8ff, #1479e0); }
+    .b6 { background: linear-gradient(#b57aff, #7a1fd6); }
+  </style>
+</head>
+<body>
+
+  <!-- Небо -->
+  <div id="sky">
+    <div class="cloud" style="top: 12%; animation-duration: 60s; animation-delay: -10s;"></div>
+    <div class="cloud" style="top: 30%; animation-duration: 80s; animation-delay: -45s;"></div>
+    <div class="cloud" style="top: 68%; animation-duration: 70s; animation-delay: -25s;"></div>
+    <div class="cloud" style="top: 85%; animation-duration: 90s; animation-delay: -60s;"></div>
+  </div>
+
+  <!-- Главная кнопка -->
+  <div id="center">
+    <button id="mainBtn">добро пожаловать</button>
+  </div>
+
+  <!-- Бегущая надпись -->
+  <div id="marquee">
+    <div id="strip"></div>
+  </div>
+
+  <!-- Меню -->
+  <div class="menu" id="menuLeft">
+    <button class="b1" id="btn1">1</button>
+    <button class="b2" id="btn2">2</button>
+    <button class="b3" id="btn3">3</button>
+  </div>
+  <div class="menu" id="menuRight">
+    <button class="b4" id="btn4">4</button>
+    <button class="b5" id="btn5">5</button>
+    <button class="b6" id="btn6">6</button>
+  </div>
+
+  <script>
+    var strip = document.getElementById("strip");
+    var sky = document.getElementById("sky");
+    var mainBtn = document.getElementById("mainBtn");
+
+    // ---------- Бегущая лента ----------
+    function buildStrip(word) {
+      var half = ("<span>" + word + "</span>").repeat(30);
+      strip.innerHTML = half + half;
+    }
+    buildStrip("привет");
+
+    // ---------- Большая кнопка ----------
+    var clicks = 0;
+    mainBtn.addEventListener("click", function () {
+      clicks = clicks + 1;
+      if (clicks === 1) {
+        mainBtn.innerText = "еще раз";
+        mainBtn.classList.add("red");
+      } else if (clicks === 2) {
+        document.body.classList.add("with-sky");
+        document.getElementById("center").style.display = "none";
+      }
+    });
+
+    // ---------- Звёзды (создаём заранее, показываются только ночью) ----------
+    for (var i = 0; i < 80; i++) {
+      var star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.left = Math.random() * 100 + "%";
+      sky.appendChild(star);
+    }
+
+    // ---------- Кнопка 1: закат ----------
+    document.getElementById("btn1").addEventListener("click", function () {
+      sky.classList.remove("night");
+      sky.classList.add("sunset");
+    });
+
+    // ---------- Кнопка 2: добавить облако ----------
+    document.getElementById("btn2").addEventListener("click", function () {
+      var cloud = document.createElement("div");
+      cloud.className = "cloud extra";
+      cloud.style.top = (5 + Math.random() * 85) + "%";
+      cloud.style.animationDuration = (40 + Math.random() * 50) + "s";
+      cloud.style.animationDelay = "-" + (Math.random() * 40) + "s";
+      sky.appendChild(cloud);
+    });
+
+    // ---------- Кнопка 3: скорость ленты (по кругу) ----------
+    var speeds = ["25s", "12s", "5s", "2s"];
+    var speedIndex = 0;
+    document.getElementById("btn3").addEventListener("click", function () {
+      speedIndex = (speedIndex + 1) % speeds.length;
+      strip.style.animationDuration = speeds[speedIndex];
+    });
+
+    // ---------- Кнопка 4: ночь со звёздами ----------
+    document.getElementById("btn4").addEventListener("click", function () {
+      sky.classList.remove("sunset");
+      sky.classList.add("night");
+    });
+
+    // ---------- Кнопка 5: поменять слово в ленте ----------
+    document.getElementById("btn5").addEventListener("click", function () {
+      var word = prompt("Какое слово пустить по ленте?");
+      if (word && word.trim() !== "") {
+        buildStrip(word.trim());
+      }
+    });
+
+    // ---------- Кнопка 6: сбросить всё ----------
+    document.getElementById("btn6").addEventListener("click", function () {
+      sky.classList.remove("sunset");
+      sky.classList.remove("night");
+
+      var extras = document.querySelectorAll(".cloud.extra");
+      for (var j = 0; j < extras.length; j++) {
+        extras[j].remove();
+      }
+
+      speedIndex = 0;
+      strip.style.animationDuration = speeds[0];
+      buildStrip("привет");
+    });
+  </script>
+</body>
+</html>
